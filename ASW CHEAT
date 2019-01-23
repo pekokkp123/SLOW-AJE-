@@ -1,0 +1,97 @@
+ #define DIPEngine 0x4CB642
+DWORD retDIPEngine = ( DIPEngine + 0x8 );
+#define newDIPEngine2 0x4C39BF
+DWORD retnewDIPEngine2 = ( newDIPEngine2 + 0x7 );
+#define EndSceneEngine 0x45868F
+DWORD retEndSceneEngine = ( EndSceneEngine + 0x8 );
+#define PresentEngine 0x4E50CF
+DWORD retPresentEngine = ( PresentEngine + 0x5 );
+//|--------------------------| Draw Text Engine Address |--------------------------|
+#define DrawTextEngine 0x1C1E6F8
+#define CallDrawTextEngine 0x564850
+//|----------------------------------| WallHack |----------------------------------|
+#define WALL_ARRAY 0x468BF4
+#define WallHack 0x468CA2
+#define SeeGhost 0x468CB6
+//|--------------------------------| Wall Pointer |--------------------------------|
+#define WallPointer 0x1C11FC4
+#define TextureType 0x594
+#define offset1 0x568
+#define offset2 0x56C
+#define offset3 0x570
+//|-------------------------------| Weapon Manager |-------------------------------|
+#define dw_pWeaponMgr 0x1C11FDC
+//|------------------------------| HeadShot Manager |------------------------------|
+#define ModelNode 0x1C11F0C
+#define ModelNodeOffset 0x54
+#define ModelNodeLoop 0x9C
+#define SuperKillOffset 0x38
+//|--------------------------------------------------------------------------------|
+//| 1034F261 | 8B0D 5C6AA111 | MOV ECX,DWORD PTR DS:[11A16A5C] ->ModelNode |
+//| 1034F267 | 83C4 04 | ADD ESP,4 |
+//| 1034F26A | 89440F 54 | MOV DWORD PTR DS:[EDI+ECX+54],EAX -> Offset 0x54 |
+//| 1034F26E | 8B15 5C6AA111 | MOV EDX,DWORD PTR DS:[11A16A5C] |
+//| 1034F274 | 8B0417 | MOV EAX,DWORD PTR DS:[EDI+EDX] |
+//| 1034F277 | 3BC3 | CMP EAX,EBX |
+//| 1034F279 | 7C 0E | JL SHORT Dumped_0.1034F289 |
+//| 1034F27B | 3D 96000000 | CMP EAX,96 |
+//| 1034F280 | 7D 07 | JGE SHORT Dumped_0.1034F289 |
+//| 1034F282 | 892C85 0068A111 | MOV DWORD PTR DS:[EAX*4+11A16800],EBP |
+//| 1034F289 | 8305 586AA111 01 | ADD DWORD PTR DS:[11A16A58],1 |
+//| 1034F290 | 83C5 01 | ADD EBP,1 |
+//| 1034F293 | 81C7 9C000000 | ADD EDI,9C -> Loop |
+//|--------------------------------------------------------------------------------|
+//|---------------------------------| Auto Head |----------------------------------|
+//| DWORD pHeadShotMgr = *( DWORD* )( CShell + ModelNode );// Initializing Address |
+//| DWORD pModelNodeType = ( DWORD )( pHeadShotMgr + x * 0x9C );// Loop |
+//| *( int* )( pModelNodeType + 0x54 )// Value // 1 = Golden / 2 = Silver |
+//|--------------------------------------------------------------------------------|
+//|---------------------------------| Super Kill |---------------------------------|
+//| *( float* )( ( pHeadShotMgr + 0x38 + y * 4 ) + ( x * 0x9C ) ) |
+//|--------------------------------------------------------------------------------|
+//|---------------------------------| Bug Damage |---------------------------------|
+#define DamagePerMeter 0x1C11FBC
+#define FallDamageOffset 0x4
+#define VisibleZoneIndex 0xA9CDB0
+#define DamageZone 0xA9CE68
+#define DamagePerSec 0xA9CE58
+#define Eatman 0xA9CDF4
+#define versioncode 0xA9CE80
+//|--------------------------------| Player Pointer |------------------------------|
+#define BasicPlayerInfo 0x1B44200
+//|--------------------------------| Player Pointer |------------------------------|
+#define dw_pCLTPlayerClient 0xD37CC8
+#define CLTPlayerClientOffset 0x70
+//|--------------------------------------| ESP |-----------------------------------|
+#define dw_pLTClientShell 0xD1E4D0
+#define dwCPlayerStart 0x7904
+#define MEOffset 0x790C
+#define dwCPlayerSize 0x860
+#define dw_pLTModel 0xD1B99C
+#define aLTModelOffset 0x3C
+//|--------------------------------------------------------------------------------|
+//| __asm |
+//| { |
+//| MOV ECX,pLTModel |
+//| MOV EDX,DWORD PTR DS:[ECX] |
+//| MOV EDX,DWORD PTR DS:[EDX + 0x3C] (0x3C = aLTModelOffset) |
+//| PUSH 1 |
+//| PUSH Trans |
+//| PUSH Bone |
+//| PUSH obj |
+//| CALL EDX |
+//| } |
+//| This is used to get bone position (GetBonePositionEx) |
+//| and marely to update, we are just making sure we have it |
+//|--------------------------------------------------------------------------------|
+//|----------------------------| Visible Check | PTC |-----------------------------|
+#define aIntersectSegment 0x66FDED
+#define aILTClient 0xD1E4C4
+#define PTCOffset 0x210
+//|------------------------| CROSSFIRE ADDY AND OFFSETS END |----------------------|
+//|--------------------------------------------------------------------------------|
+//|--------------------------------------------------------------------------------|
+//|-------------------------------| CROSSFIRE LOG END |----------------------------|
+//|--------------------------------------------------------------------------------|
+//|--------------------------------------------------------------------------------|
+// [01:20:19] Log End...
